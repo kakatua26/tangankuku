@@ -1,7 +1,9 @@
 function [cA,cH,cV,cD] = ekstrakDWT(img)
     img = imresize(img, [700,600]);
-    [Lo,Hi] = wfilters('haar','d');
-    filter = [Lo;Hi];
+    %[Lo,Hi] = wfilters('haar','d');
+    %filter = [Lo;Hi];
+    Lo = [0.7071 0.7071]
+    Hi = [-0.7071 0.7071]
     ukuran = size(img);
     hasilFilt = [];
     D2 = zeros(ukuran);
