@@ -62,6 +62,6 @@ if(verbose)
     end
     for i=1:np
         [t,ind]=min((scales-ipts(i).scale).^2);
-        plot(h_res(ind),ipts(i).y*scaley(ind)+1,ipts(i).x*scalex(ind)+1,'o','color',rand(1,3));
+        plot(h_res(ind),ipts(i).y*scaley(ind)+1,ipts(i).x*scalex(ind)+1,'o','color',1);
     end
 end
