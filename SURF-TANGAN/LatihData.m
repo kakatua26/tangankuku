@@ -1,6 +1,6 @@
 function hasil = LatihData()
     clc;
-    D = 'D:\Danny\SURF-TANGAN\DataLatih';
+    D = 'D:\SURF-TANGAN\DataLatih';
     
     %image={im2double(imresize(imread('tangan01.jpg'),[256 256]));};
     imagetrains =  dir(fullfile(D,'*.jpg'));
@@ -20,13 +20,14 @@ function hasil = LatihData()
 
         % Get the Key Points
         Options.upright=true;
-        Options.tresh=0.0001;
+        Options.tresh=0.0009;
         SurfExtract = ExtractSURF(I2,Options);
 
         % Put the landmark descriptors in a matrix
         %D1 = reshape([Ipts1.descriptor],64,[]);
         FeatureVec = reshape([SurfExtract.descriptor],64,[]);
-        klaster = kmeans(FeatureVec,3,'Distance','cityblock');
+        rng(1)
+        klaster = kmeans(FeatureVec,25,'Distance','cityblock');
         %features = D2(:);
         panjang = length(klaster);
         features = reshape(klaster, [1 panjang]);
