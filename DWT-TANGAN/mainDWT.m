@@ -1,24 +1,23 @@
 function [hasil] = mainDWT(knn)
     
-    D1 = 'D:\Danny\bas\DataUji'; %image dari android disimpan disini
-    imagetest = dir(fullfile(D1,'gambar.jpg'));
+    D1 = 'D:\TUGAS AKHIR 2.0\PENGUJIAN LEVEL 1\DataUji'; %ini gambar dari android
+    imagetest = dir(fullfile(D1,'tangan1.jpg')); %ini gambar dari android
     uji = imread(fullfile(D1,imagetest.name));
     
-    fileLatih = 'ciriLatih.txt';
-    fileKelas = 'kelasCiri.txt';
+    fileLatih = 'ciriLatihLevel1.txt';
+    fileKelas = 'kelasCiriLevel1.txt';
     ciriLatih = csvread(fileLatih);
     kelasCiri = csvread(fileKelas);
     kelasCiri = kelasCiri(:);
     
-    k = knn;
+    k = 5;
     
     %training
     train = fitcknn(ciriLatih,kelasCiri,'NumNeighbors',k,'Standardize',1);
     
     dataUji = double(rgb2gray(uji));
     [cA,cH,cV,cD] = ekstrakDWT(dataUji);
-    [cA1,cH1,cV1,cD1] = ekstrakDWT(cA);
-    
+
     %==========================================
     %cA level 1
     cA=cA(:);
@@ -60,49 +59,8 @@ function [hasil] = mainDWT(knn)
     cDvarian = sum(cDmean)/length(cD);
     SD_cD = sqrt(cDvarian);
 
-    %============================
-    %cA1 level 2
-    cA1=cA1(:);
-    mean_cA1 = sum(cA1)/length(cA1);
-    cA1mean = [];
-    for j=1:length(cA1)
-        cA1mean = [cA1mean; (cA1(j)-mean_cA1)*(cA1(j)-mean_cA1)];
-    end
-    cA1varian = sum(cA1mean)/length(cA1);
-    SD_cA1 = sqrt(cA1varian);
-
-    %cH1 level 2
-    cH1=cH1(:);
-    mean_cH1 = sum(cH1)/length(cH1);
-    cH1mean = [];
-    for j=1:length(cH1)
-        cH1mean = [cH1mean; (cH1(j)-mean_cH1)*(cH1(j)-mean_cH1)];
-    end
-    cH1varian = sum(cH1mean)/length(cH1);
-    SD_cH1 = sqrt(cH1varian);
-
-    %cV1 level 2
-    cV1=cV1(:);
-    mean_cV1 = sum(cV1)/length(cV1);
-    cV1mean = [];
-    for j=1:length(cV1)
-        cV1mean = [cV1mean; (cV1(j)-mean_cV1)*(cV1(j)-mean_cV1)];
-    end
-    cV1varian = sum(cV1mean)/length(cV1);
-    SD_cV1 = sqrt(cV1varian);
-
-    %cD1 level 2
-    cD1=cD1(:);
-    mean_cD1 = sum(cD1)/length(cD1);
-    cD1mean = [];
-    for j=1:length(cD1)
-        cD1mean = [cD1mean; (cD1(j)-mean_cD1)*(cD1(j)-mean_cD1)];
-    end
-    cD1varian = sum(cD1mean)/length(cD1);
-    SD_cD1 = sqrt(cD1varian);
     %===================
-    ciriUji = [mean_cA SD_cA mean_cH SD_cH mean_cV SD_cV mean_cD SD_cD mean_cA1 SD_cA1 mean_cH1 SD_cH1 mean_cV1 SD_cV1 mean_cD1 SD_cD1];
-    
+    ciriUji = [mean_cA SD_cA mean_cH SD_cH mean_cV SD_cV mean_cD SD_cD]; 
     %predict
     [label,score,cost] = predict(train,ciriUji);
 
