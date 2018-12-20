@@ -1,11 +1,11 @@
 function [hasil] = mainDWT(knn)
     
     D1 = 'D:\TUGAS AKHIR 2.0\PENGUJIAN LEVEL 1\DataUji'; %ini gambar dari android
-    imagetest = dir(fullfile(D1,'tangan1.jpg')); %ini gambar dari android
+    imagetest = dir(fullfile(D1,'gambar.jpg')); %ini gambar dari android
     uji = imread(fullfile(D1,imagetest.name));
     
-    fileLatih = 'ciriLatihLevel1.txt';
-    fileKelas = 'kelasCiriLevel1.txt';
+    fileLatih = 'ciriLatih.txt';
+    fileKelas = 'kelasCiri.txt';
     ciriLatih = csvread(fileLatih);
     kelasCiri = csvread(fileKelas);
     kelasCiri = kelasCiri(:);
